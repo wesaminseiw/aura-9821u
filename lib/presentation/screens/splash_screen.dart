@@ -2,6 +2,7 @@ import 'package:aura/app/router.dart';
 import 'package:aura/app/utils/constants.dart';
 import 'package:aura/app/utils/extensions.dart';
 import 'package:aura/app/utils/utils.dart';
+import 'package:aura/localization/l10n.dart';
 import 'package:aura/presentation/styles/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // Navigate to the next screen after a delay
     Future.delayed(const Duration(seconds: 1), () {
       // TODO: change the duration of the splash to 2.5/3sec
-      AppRouter.offHome();
+      AppRouter.offSignIn();
     });
   }
 
@@ -47,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'aura',
+                  aura,
                   textAlign: TextAlign.center,
                   style: context.displayMedium?.copyWith(fontWeight: FontWeight.bold),
                 ),
@@ -56,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'by Wes',
+                      byWes,
                       style: context.bodyLarge,
                     ),
                     const SizedBox(width: 2),

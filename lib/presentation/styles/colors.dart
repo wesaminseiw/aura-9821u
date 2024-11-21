@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 //* colors for both themes
 const primaryColor = Color(0xFFE72260);
+final errorColor = Colors.red[900]!;
 const blackTextColor = Color(0xFF272727);
 const whiteTextColor = Color(0xFFFFFFFF);
 
