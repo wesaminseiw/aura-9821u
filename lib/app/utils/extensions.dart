@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 extension ThemeExtension on BuildContext {
   ColorScheme get colorScheme => Theme.of(this).colorScheme;
+  Brightness get brightness => Theme.of(this).brightness;
 
   //* Color themes getters
   Color get primary => Theme.of(this).colorScheme.primary;
