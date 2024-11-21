@@ -1,4 +1,4 @@
-# {{PROJECT_NAME}}
+# aura
 
 ## Project Structure
 
@@ -13,6 +13,6 @@
 
 ## GitHub Repository
 
-- **{{GITHUB_REPO}}**
+- **https://github.com/wesaminseiw/aura-9821u.git**
 
 
