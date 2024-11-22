@@ -8,11 +8,13 @@ Widget textfield(
   required String hint,
   required String label,
   required TextInputType keyboardType,
+  required TextEditingController controller,
   bool? isPassword,
 }) {
   return Builder(
     builder: (context) {
       return TextField(
+        controller: controller,
         style: context.headlineSmall!.copyWith(fontSize: 16),
         keyboardType: keyboardType,
         obscureText: isPassword ?? false,
@@ -21,14 +23,15 @@ Widget textfield(
           contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 18),
           hintText: hint,
           hintStyle: context.headlineSmall!.copyWith(
-            color: isDarkMode(context) ? whiteTextColor.withOpacity(0.7) : blackTextColor.withOpacity(0.6),
+            color: isDarkMode(context) ? whiteTextColor.withOpacity(0.4) : blackTextColor.withOpacity(0.6),
             fontSize: 16,
           ),
           floatingLabelStyle: context.headlineSmall!.copyWith(
             color: context.primary,
           ),
           labelText: label,
-          labelStyle: context.headlineSmall!.copyWith(fontSize: 16),
+          labelStyle: context.headlineSmall!
+              .copyWith(fontSize: 16, color: isDarkMode(context) ? whiteTextColor.withOpacity(0.6) : blackTextColor.withOpacity(0.6)),
           filled: true,
           fillColor: isDarkMode(context) ? darkBackgroundColor : lightBackgroundColor,
           enabledBorder: OutlineInputBorder(

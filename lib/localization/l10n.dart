@@ -8,19 +8,25 @@ const byWes = 'by Wes';
 
 //^ signin screen texts
 const signin = 'Sign In';
-const signinSubtitle_Part1 = 'continue your journey with the';
+const signinSubtitle_Part1 = 'resume your journey in the';
 const signinSubtitle_Part2 = ' aura';
+const signinSuccessVerifiedSnackbar_Title = 'Logged in successfully';
+const signinSuccessNotVerifiedSnackbar_Title = 'Logged in successfully, but you\'ll need to verify your email before you can use aura';
 
 //^ signup screen texts
 const signup = 'Sign Up';
-const signupSubtitle_Part1 = 'join us and be part of the aura';
+const signupSubtitle_Part1 = 'join us and be part of the';
 const signupSubtitle_Part2 = ' aura';
+const signupSuccessSnackbar_Title = 'Created account successfully, but you\'ll need to verify your email before you can use aura';
 
 //^ verify email screen texts
 const verify = 'Verify';
 const verifyEmailSubtitle_Part1 = 'We\'ve sent to';
 const verifyEmailSubtitle_Part2 = 'a link, check your inbox and follow the link to verify your email.';
 const verifyEmailSubtitle_Part3 = 'If you have verified, press the button below.';
+
+//^ cubits & blocs texts
+const authCubit_EmptyFieldsSnackbarTitle = 'Those fields above can\'t be empty';
 
 //^ textfield texts
 //! hints
