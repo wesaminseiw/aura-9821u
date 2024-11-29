@@ -48,7 +48,7 @@ class AuthCubit extends Cubit<AuthState> {
         email: email,
         password: password,
       );
-      final bool isEmailVerified = AuthService.checkEmailVerification();
+      final bool isEmailVerified = await AuthService.checkEmailVerification();
       isEmailVerified == true ? emit(AuthSignIn_SuccessVerified()) : emit(AuthSignIn_SuccessNotVerified());
     } catch (e) {
       if (e is AuthException) {
@@ -58,4 +58,55 @@ class AuthCubit extends Cubit<AuthState> {
       }
     }
   }
+
+  Future<void> checkUserState() async {
+    final int screen = await AuthService.checkUserState();
+    log('checkUserState called. Screen: $screen');
+
+    await Future.delayed(Duration(seconds: 1)); // TODO: change to 3sec
+
+    if (screen == 0) {
+      emit(AuthCheck_NoUser());
+      log('Emitting AuthCheck_NoUser');
+    } else if (screen == 1) {
+      emit(AuthCheck_NotVerifiedUser());
+      log('Emitting AuthCheck_NotVerifiedUser');
+    } else if (screen == 2) {
+      emit(AuthCheck_VerifiedUser());
+      log('Emitting AuthCheck_VerifiedUser');
+    } else {
+      emit(AuthCheck_NoUser());
+      log('Emitting default AuthCheck_NoUser');
+    }
+  }
+
+  void getEmail() {
+    try {
+      final String email = AuthService.getEmail();
+      emit(AuthGetEmail_Success(email: email));
+    } catch (e) {
+      emit(AuthGetEmail_Failure());
+    }
+  }
+
+  Future<void> checkEmailVerification() async {
+    final bool isVerified = await AuthService.checkEmailVerification();
+    if (isVerified == true) {
+      emit(AuthCheckVerification_Verified());
+    } else {
+      emit(AuthCheckVerification_NotVerified());
+    }
+  }
+
+  // Future<void> deleteUser() async {
+  //   emit(AuthDeleteUser_Loading());
+  //   try {
+  //     await AuthService.deleteAccount();
+  //     emit(AuthDeleteUser_Success());
+  //   } catch (e) {
+  //     if (e is AuthException) {
+  //       emit(AuthDeleteUser_Failure(error: e.message!));
+  //     }
+  //   }
+  // }
 }

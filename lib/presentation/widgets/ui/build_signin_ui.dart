@@ -24,7 +24,7 @@ Widget buildSignInUI(BuildContext context) {
         shortTimeSnackBar(context, content: signinSuccessVerifiedSnackbar_Title);
         AppRouter.offHome();
       } else if (state is AuthSignIn_SuccessNotVerified) {
-        shortTimeSnackBar(context, content: signinSuccessNotVerifiedSnackbar_Title);
+        longTimeSnackBar(context, content: signinSuccessNotVerifiedSnackbar_Title);
         AppRouter.offVerifyEmail();
       }
     },
@@ -85,7 +85,7 @@ Widget buildSignInUI(BuildContext context) {
             isPassword: true,
           ),
           height(18),
-          state is AuthSignUp_Loading
+          state is AuthSignIn_Loading
               ? loading()
               : submitButton(
                   context,
@@ -133,7 +133,7 @@ Widget buildSignInUI(BuildContext context) {
             children: [
               Expanded(
                 flex: 3,
-                child: outlinedButton(
+                child: secondarySubmitButton(
                   context,
                   label: signupButton_Label,
                   onTap: () => AppRouter.offSignUp(),

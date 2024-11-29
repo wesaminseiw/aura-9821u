@@ -17,20 +17,31 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthCubit(),
-      child: GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: aura,
-        themeMode: ThemeMode.system,
-        theme: lightTheme(),
-        darkTheme: darkTheme(),
-        getPages: AppRouter.routes,
-        builder: (context, child) {
-          final brightness = isDarkMode(context) ? Brightness.dark : Brightness.light;
-          _setSystemUIOverlay(context, brightness);
-
-          return child!;
+      child: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is AuthCheck_NoUser) {
+            AppRouter.offSignIn();
+          } else if (state is AuthCheck_NotVerifiedUser) {
+            AppRouter.offVerifyEmail();
+          } else if (state is AuthCheck_VerifiedUser) {
+            AppRouter.offHome();
+          }
         },
-        home: SplashScreen(),
+        child: GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: aura,
+          themeMode: ThemeMode.system,
+          theme: lightTheme(),
+          darkTheme: darkTheme(),
+          getPages: AppRouter.routes,
+          builder: (context, child) {
+            final brightness = isDarkMode(context) ? Brightness.dark : Brightness.light;
+            _setSystemUIOverlay(context, brightness);
+
+            return child!;
+          },
+          home: SplashScreen(),
+        ),
       ),
     );
   }

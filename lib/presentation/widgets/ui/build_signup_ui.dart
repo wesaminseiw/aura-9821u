@@ -33,8 +33,8 @@ Widget buildSignUpUI(BuildContext context) {
         children: [
           Image.asset(
             isDarkMode(context) ? logoLightNoBg : logoDarkNoBg,
-            width: 130,
-            height: 130,
+            width: 120,
+            height: 120,
           ),
           height(48),
           Column(
@@ -67,7 +67,7 @@ Widget buildSignUpUI(BuildContext context) {
               ),
             ],
           ),
-          height(24),
+          height(18),
           Row(
             children: [
               Expanded(
@@ -107,6 +107,16 @@ Widget buildSignUpUI(BuildContext context) {
             label: passwordTextField_Label,
             keyboardType: TextInputType.visiblePassword,
             isPassword: true,
+          ),
+          height(10),
+          Text(
+            signupWarningText,
+            style: context.headlineSmall!.copyWith(
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+              color: Colors.grey[600]!,
+            ),
+            textAlign: TextAlign.center,
           ),
           height(18),
           state is AuthSignUp_Loading
@@ -162,7 +172,7 @@ Widget buildSignUpUI(BuildContext context) {
             children: [
               Expanded(
                 flex: 3,
-                child: outlinedButton(
+                child: secondarySubmitButton(
                   context,
                   label: signinButton_Label,
                   onTap: () => AppRouter.offSignIn(),

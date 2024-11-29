@@ -13,7 +13,7 @@ class SignUpScreen extends StatelessWidget {
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: EdgeInsets.only(left: 22, right: 22, top: 128),
+            padding: EdgeInsets.only(left: 22, right: 22, top: 96),
             child: buildSignUpUI(context),
           ),
         ),

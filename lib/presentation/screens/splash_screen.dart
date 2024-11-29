@@ -1,10 +1,11 @@
-import 'package:aura/app/router.dart';
 import 'package:aura/app/utils/constants.dart';
 import 'package:aura/app/utils/extensions.dart';
 import 'package:aura/app/utils/utils.dart';
 import 'package:aura/localization/l10n.dart';
+import 'package:aura/logic/cubits/auth_cubit/auth_cubit.dart';
 import 'package:aura/presentation/styles/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,11 +19,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    // Navigate to the next screen after a delay
-    Future.delayed(const Duration(seconds: 1), () {
-      // TODO: change the duration of the splash to 2.5/3sec
-      AppRouter.offSignIn();
-    });
+    // Check the user state and emit the appropriate AuthState
+    context.read<AuthCubit>().checkUserState();
   }
 
   @override

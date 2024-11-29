@@ -18,12 +18,17 @@ const signup = 'Sign Up';
 const signupSubtitle_Part1 = 'join us and be part of the';
 const signupSubtitle_Part2 = ' aura';
 const signupSuccessSnackbar_Title = 'Created account successfully, but you\'ll need to verify your email before you can use aura';
+const signupWarningText = 'Please note that you can\'t delete your account later.\nEnter your email correctly to avoid issues';
 
 //^ verify email screen texts
 const verify = 'Verify';
 const verifyEmailSubtitle_Part1 = 'We\'ve sent to';
 const verifyEmailSubtitle_Part2 = 'a link, check your inbox and follow the link to verify your email.';
 const verifyEmailSubtitle_Part3 = 'If you have verified, press the button below.';
+const you = 'you';
+const notVerifiedYet = 'Not verified yet';
+const userHasBeenDeleted = 'User has been deleted';
+const restart = 'Restart';
 
 //^ cubits & blocs texts
 const authCubit_EmptyFieldsSnackbarTitle = 'Those fields above can\'t be empty';

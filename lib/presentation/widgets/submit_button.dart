@@ -31,7 +31,7 @@ Widget submitButton(
   );
 }
 
-Widget outlinedButton(
+Widget secondarySubmitButton(
   BuildContext context, {
   required String label,
   required void Function() onTap,
