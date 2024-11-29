@@ -10,15 +10,23 @@ Widget textfield(
   required TextInputType keyboardType,
   required TextEditingController controller,
   bool? isPassword,
+  FocusNode? focusNode,
+  bool? readOnly,
+  void Function(String)? onChanged,
+  void Function()? onTap,
 }) {
   return Builder(
     builder: (context) {
       return TextField(
+        readOnly: readOnly ?? false,
+        focusNode: focusNode,
         controller: controller,
         style: context.headlineSmall!.copyWith(fontSize: 16),
         keyboardType: keyboardType,
         obscureText: isPassword ?? false,
         obscuringCharacter: '●',
+        onChanged: onChanged,
+        onTap: onTap,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 18),
           hintText: hint,

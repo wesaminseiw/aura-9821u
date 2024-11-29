@@ -2,6 +2,7 @@ import 'package:aura/app/router.dart';
 import 'package:aura/app/utils/utils.dart';
 import 'package:aura/localization/l10n.dart';
 import 'package:aura/logic/cubits/auth_cubit/auth_cubit.dart';
+import 'package:aura/logic/cubits/customization_cubit/customization_cubit.dart';
 import 'package:aura/presentation/screens/splash_screen.dart';
 import 'package:aura/presentation/styles/colors.dart';
 import 'package:aura/presentation/themes/themes.dart';
@@ -15,8 +16,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CustomizationCubit(),
+        ),
+      ],
       child: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthCheck_NoUser) {
@@ -25,6 +33,8 @@ class MyApp extends StatelessWidget {
             AppRouter.offVerifyEmail();
           } else if (state is AuthCheck_VerifiedUser) {
             AppRouter.offHome();
+          } else if (state is AuthCheck_UncustomizedUser) {
+            AppRouter.offCustomization();
           }
         },
         child: GetMaterialApp(

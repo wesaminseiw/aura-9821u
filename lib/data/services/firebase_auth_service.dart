@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:aura/app/utils/exceptions.dart';
+import 'package:aura/data/services/firebase_firestore_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 final _auth = FirebaseAuth.instance;
-final _firestore = FirebaseFirestore.instance;
 
 class AuthService {
   static Future<void> signup({
@@ -21,14 +19,15 @@ class AuthService {
       );
 
       await _auth.currentUser!.updateDisplayName(username);
-
       final uniqueCollectionName = '${username}_${_auth.currentUser!.uid}';
-      await _firestore.collection('accounts').doc(uniqueCollectionName).set({
-        'username': username,
-        'full_name': fullName,
-        'owner_uid': _auth.currentUser!.uid,
-        'joined_at': DateTime.now(),
-      });
+      await FirestoreService().setAccountData(
+        email: email,
+        password: password,
+        username: username,
+        fullName: fullName,
+        uid: _auth.currentUser!.uid,
+        uniqueCollectionName: uniqueCollectionName,
+      );
       await _auth.currentUser!.sendEmailVerification();
     } on FirebaseAuthException catch (e) {
       throw AuthException(e.code, e.message);
@@ -61,6 +60,7 @@ class AuthService {
 
   static Future<int> checkUserState() async {
     final user = _auth.currentUser;
+    final userData = await AuthService.getUserData();
 
     try {
       if (user != null) {
@@ -76,13 +76,38 @@ class AuthService {
     if (!user.emailVerified) {
       return 1; // User not verified
     }
-    return 2; // Verified user
+
+    if (userData['profile_picture'] == null &&
+        userData['birthDate'] == null &&
+        userData['country'] == null &&
+        userData['gender'] == null &&
+        userData['title'] == null) {
+      return 2; // Missing customization data
+    }
+    return 3; // Verified user
   }
 
   static String getEmail() {
     String email = _auth.currentUser!.email!;
-    log(email);
+    // log(email);
     return email;
+  }
+
+  static Future<Map<String, dynamic>> getUserData() async {
+    final _user = _auth.currentUser!;
+    final documentReference = FirebaseFirestore.instance.collection('accounts').doc('${_user.displayName}_${_user.uid}');
+
+    final documentSnapshot = await documentReference.get();
+
+    if (!documentSnapshot.exists) {
+      // log('No user data found for ${_user.displayName}_${_user.uid}');
+      return {}; // Return an empty map if the document doesn't exist
+    }
+
+    final userData = documentSnapshot.data() as Map<String, dynamic>;
+
+    // log('User Data: $userData');
+    return userData;
   }
 
   // static Future<void> deleteAccount() async {

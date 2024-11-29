@@ -136,7 +136,7 @@ Widget buildSignUpUI(BuildContext context) {
                             fullName: fullNameController.text,
                           );
                     } else {
-                      shortTimeSnackBar(context, content: authCubit_EmptyFieldsSnackbarTitle);
+                      shortTimeSnackBar(context, content: emptyFieldsSnackbarTitle);
                     }
                   },
                 ),

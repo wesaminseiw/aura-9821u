@@ -4,14 +4,13 @@ import 'package:aura/app/utils/extensions.dart';
 import 'package:aura/app/utils/utils.dart';
 import 'package:aura/localization/l10n.dart';
 import 'package:aura/logic/cubits/auth_cubit/auth_cubit.dart';
+import 'package:aura/logic/cubits/customization_cubit/customization_cubit.dart';
 import 'package:aura/presentation/widgets/sizedbox.dart';
 import 'package:aura/presentation/widgets/snackbar.dart';
 import 'package:aura/presentation/widgets/submit_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// TODO: Fix the design of the verify screen
-// TODO: Not navigating to home after verified
 class VerifyEmailScreen extends StatefulWidget {
   const VerifyEmailScreen({super.key});
 
@@ -29,11 +28,15 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is AuthCheckVerification_NotVerified) {
           shortTimeSnackBar(context, content: notVerifiedYet);
         } else if (state is AuthCheckVerification_Verified) {
+          context.read<CustomizationCubit>().checkIfCustomizationDataExists();
+        } else if (state is CustomizationExistCheck_Exists) {
           AppRouter.offHome();
+        } else if (state is CustomizationExistCheck_NotExisting) {
+          AppRouter.offCustomization();
         }
       },
       builder: (context, state) {

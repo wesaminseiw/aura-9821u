@@ -9,6 +9,6 @@ class AuthException implements Exception {
 class EmptyFieldsException implements Exception {
   final String message;
   EmptyFieldsException({
-    this.message = authCubit_EmptyFieldsSnackbarTitle,
+    this.message = emptyFieldsSnackbarTitle,
   });
 }

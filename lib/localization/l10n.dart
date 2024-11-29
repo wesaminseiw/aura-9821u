@@ -30,8 +30,35 @@ const notVerifiedYet = 'Not verified yet';
 const userHasBeenDeleted = 'User has been deleted';
 const restart = 'Restart';
 
-//^ cubits & blocs texts
-const authCubit_EmptyFieldsSnackbarTitle = 'Those fields above can\'t be empty';
+//^ customization screen texts
+const customization = 'Customization';
+const enterTitleHint = 'Enter your title (Student, etc.)';
+const titleLabel = 'Title';
+const enterCountryHint = 'Enter your country';
+const countryLabel = 'Country';
+const birthDateHint = 'Birth Date';
+const birthDateLabel = 'Birth Date';
+const genderHint = 'Your gender';
+const genderLabel = 'Gender';
+const somethingWentWrong = 'Something went wrong';
+
+//! gender options
+const male = 'Male';
+const female = 'Female';
+const preferNotToSay = 'Prefer not to say';
+//! snackbar texts
+const loggedInSuccessfully = 'Logged in successfully';
+const loggedInButNeedVerification = 'Logged in successfully, but you\'ll need to verify your email before you can use aura';
+//! buttons
+const pickImageButton = 'Pick Image';
+const chooseCountryButton = 'Choose Country';
+//! other texts
+const cameraImagePath = 'assets/images/camera.png';
+const birthDatePickerLabel = 'Select Birth Date';
+const genderPickerLabel = 'Select Gender';
+
+//^ snackbar texts
+const emptyFieldsSnackbarTitle = 'Those fields above can\'t be empty';
 
 //^ textfield texts
 //! hints
@@ -50,6 +77,7 @@ const signinButton_Label = 'Sign In';
 const signupButton_Label = 'Sign Up';
 const checkVerificationButton_Label = 'Check Verification';
 const deleteAccountButton_Label = 'Delete Account';
+const confirmButton_Label = 'Confirm';
 
 //^ other texts
 const or = 'OR';

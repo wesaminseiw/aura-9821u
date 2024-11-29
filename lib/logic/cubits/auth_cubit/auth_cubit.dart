@@ -72,6 +72,9 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthCheck_NotVerifiedUser());
       log('Emitting AuthCheck_NotVerifiedUser');
     } else if (screen == 2) {
+      emit(AuthCheck_UncustomizedUser());
+      log('Emitting AuthCheck_UncustomizedUser');
+    } else if (screen == 3) {
       emit(AuthCheck_VerifiedUser());
       log('Emitting AuthCheck_VerifiedUser');
     } else {
@@ -92,10 +95,17 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> checkEmailVerification() async {
     final bool isVerified = await AuthService.checkEmailVerification();
     if (isVerified == true) {
+      if (checkUserState() == 2) {
+        emit(AuthCheck_UncustomizedUser());
+      }
       emit(AuthCheckVerification_Verified());
     } else {
       emit(AuthCheckVerification_NotVerified());
     }
+  }
+
+  Future<void> getUserData() async {
+    await AuthService.getUserData();
   }
 
   // Future<void> deleteUser() async {

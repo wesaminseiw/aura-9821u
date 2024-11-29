@@ -55,6 +55,10 @@ class AuthCheck_VerifiedUser extends AuthState {
   const AuthCheck_VerifiedUser();
 }
 
+class AuthCheck_UncustomizedUser extends AuthState {
+  const AuthCheck_UncustomizedUser();
+}
+
 class AuthCheck_NotVerifiedUser extends AuthState {
   const AuthCheck_NotVerifiedUser();
 }

@@ -1,6 +1,7 @@
 import 'package:aura/presentation/screens/auth_screens/signin_screen.dart';
 import 'package:aura/presentation/screens/auth_screens/signup_screen.dart';
 import 'package:aura/presentation/screens/auth_screens/verify_email_screen.dart';
+import 'package:aura/presentation/screens/customization_screens/customization_screen.dart';
 
 import 'utils/constants.dart';
 import '../presentation/screens/home_screen.dart';
@@ -25,6 +26,10 @@ class AppRouter {
       name: verifyEmailRoute,
       page: () => const VerifyEmailScreen(),
     ),
+    GetPage(
+      name: customizationRoute,
+      page: () => const CustomizationScreen(),
+    ),
   ];
 
   //* to navigators
@@ -44,6 +49,10 @@ class AppRouter {
     Get.toNamed(verifyEmailRoute);
   }
 
+  static void toCustomization() {
+    Get.toNamed(customizationRoute);
+  }
+
   //* off navigators
   static void offHome() {
     Get.offNamed(homeRoute);
@@ -59,6 +68,10 @@ class AppRouter {
 
   static void offVerifyEmail() {
     Get.offNamed(verifyEmailRoute);
+  }
+
+  static void offCustomization() {
+    Get.offNamed(customizationRoute);
   }
 
   //* back (pop)

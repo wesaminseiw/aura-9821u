@@ -97,7 +97,7 @@ Widget buildSignInUI(BuildContext context) {
                             password: passwordController.text,
                           );
                     } else {
-                      shortTimeSnackBar(context, content: authCubit_EmptyFieldsSnackbarTitle);
+                      shortTimeSnackBar(context, content: emptyFieldsSnackbarTitle);
                     }
                   },
                 ),
