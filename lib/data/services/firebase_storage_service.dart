@@ -28,7 +28,7 @@ class StorageService {
       String fileName = image.uri.pathSegments.last;
 
       // Create a reference to Firebase Storage
-      Reference reference = _storage.ref().child('accounts/${_user.displayName}_${_user.uid}/images/profile_image/$fileName');
+      Reference reference = _storage.ref().child('accounts/${_user.uid}/images/profile_image/$fileName');
 
       // Upload the image file
       UploadTask uploadTask = reference.putFile(image);
@@ -47,7 +47,7 @@ class StorageService {
     final _user = _auth.currentUser!;
     try {
       // Reference to the Firestore document for this user
-      final userDocRef = _firestore.collection('accounts').doc('${_user.displayName}_${_user.uid}');
+      final userDocRef = _firestore.collection('accounts').doc(_user.uid);
 
       // Set the profile_picture field in Firestore
       await userDocRef.set(
@@ -77,6 +77,30 @@ class StorageService {
       }
     } catch (e) {
       log('Error uploading image or saving URL: $e');
+    }
+  }
+
+  Future<String?> getProfileImage() async {
+    try {
+      final _user = _auth.currentUser!;
+      // Reference to the Firestore document for this user
+      final userDocRef = _firestore.collection('accounts').doc(_user.uid);
+
+      // Fetch the document
+      DocumentSnapshot userDoc = await userDocRef.get();
+
+      // Check if the document exists and contains the profile_picture field
+      if (userDoc.exists && userDoc['profile_picture'] != null) {
+        String profileImageUrl = userDoc['profile_picture'];
+        log('Profile image URL retrieved: $profileImageUrl');
+        return profileImageUrl;
+      } else {
+        log('No profile image found for the user.');
+        return null;
+      }
+    } catch (e) {
+      log('Error retrieving profile image: $e');
+      return null;
     }
   }
 }

@@ -64,12 +64,16 @@ class AuthCheck_NotVerifiedUser extends AuthState {
 }
 
 // Check States
+class AuthCheckVerification_Loading extends AuthState {
+  const AuthCheckVerification_Loading();
+}
+
 class AuthCheckVerification_Verified extends AuthState {
   const AuthCheckVerification_Verified();
 }
 
 class AuthCheckVerification_NotVerified extends AuthState {
-  const AuthCheckVerification_NotVerified();
+  const AuthCheckVerification_NotVerified({required super.email});
 }
 
 // GetEmail States

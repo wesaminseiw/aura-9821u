@@ -11,6 +11,8 @@ const logoLightRounded = 'assets/logos/logo-light-rounded.png';
 
 //* ICONS PATHS
 const googleIcon = 'assets/icons/google_icon.png';
+const searchIcon = 'assets/icons/search.png';
+const settingsIcon = 'assets/icons/settings.png';
 
 //* IMAGES PATHS
 const verifyEmailImage = 'assets/images/verify-email.png';
@@ -22,6 +24,9 @@ const String signInRoute = '/signin';
 const String signUpRoute = '/signup';
 const String verifyEmailRoute = '/verify-email';
 const String customizationRoute = '/customization';
+const String settingsRoute = '/settings';
+const String searchRoute = '/search';
+const String profileRoute = '/profile';
 
 //* DEFAULT PADDING
 const EdgeInsets horizontalPadding = EdgeInsets.symmetric(horizontal: 22);

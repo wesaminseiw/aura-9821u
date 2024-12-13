@@ -16,11 +16,11 @@ class CustomizationCubit extends Cubit<CustomizationState> {
 
     emit(CustomizationExistCheck_Loading());
 
-    if (userData['profile_picture'] == null &&
-        userData['birthDate'] == null &&
-        userData['country'] == null &&
-        userData['gender'] == null &&
-        userData['title'] == null) {
+    if (userData?['profile_picture'] == null &&
+        userData?['birthDate'] == null &&
+        userData?['country'] == null &&
+        userData?['gender'] == null &&
+        userData?['title'] == null) {
       emit(CustomizationExistCheck_NotExisting());
     } else {
       emit(CustomizationExistCheck_Exists());
@@ -30,6 +30,7 @@ class CustomizationCubit extends Cubit<CustomizationState> {
   Future<void> uploadCustomization({
     required XFile image,
     required String title,
+    required String username,
     required String country,
     required String birthDate,
     required String gender,
@@ -38,9 +39,10 @@ class CustomizationCubit extends Cubit<CustomizationState> {
     try {
       await StorageService().uploadImageAndSaveUrl(image);
       final _auth = FirebaseAuth.instance;
-      final uniqueCollectionName = '${_auth.currentUser!.displayName}_${_auth.currentUser!.uid}';
+      final uniqueCollectionName = _auth.currentUser!.uid;
       await FirestoreService().setCustomizationData(
         image: image,
+        username: username,
         gender: gender,
         birthDate: birthDate,
         country: country,
@@ -50,6 +52,7 @@ class CustomizationCubit extends Cubit<CustomizationState> {
       emit(
         AddCustomization_Success(
           image: image,
+          username: username,
           birthDate: birthDate,
           country: country,
           gender: gender,

@@ -3,6 +3,7 @@ import 'package:aura/app/utils/utils.dart';
 import 'package:aura/localization/l10n.dart';
 import 'package:aura/logic/cubits/auth_cubit/auth_cubit.dart';
 import 'package:aura/logic/cubits/customization_cubit/customization_cubit.dart';
+import 'package:aura/logic/cubits/profile_cubit/profile_cubit.dart';
 import 'package:aura/presentation/screens/splash_screen.dart';
 import 'package:aura/presentation/styles/colors.dart';
 import 'package:aura/presentation/themes/themes.dart';
@@ -23,6 +24,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CustomizationCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ProfileCubit()..displayProfileImage(),
         ),
       ],
       child: BlocListener<AuthCubit, AuthState>(

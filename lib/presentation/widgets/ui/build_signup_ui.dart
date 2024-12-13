@@ -14,8 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 final TextEditingController emailController = TextEditingController();
 final TextEditingController passwordController = TextEditingController();
-final TextEditingController usernameController = TextEditingController();
-final TextEditingController fullNameController = TextEditingController();
+final TextEditingController lastNameController = TextEditingController();
+final TextEditingController firstNameController = TextEditingController();
 
 Widget buildSignUpUI(BuildContext context) {
   return BlocConsumer<AuthCubit, AuthState>(
@@ -73,9 +73,9 @@ Widget buildSignUpUI(BuildContext context) {
               Expanded(
                 child: textfield(
                   context,
-                  controller: fullNameController,
-                  hint: fullNameTextField_Hint,
-                  label: fullNameTextField_Label,
+                  controller: firstNameController,
+                  hint: 'First Name',
+                  label: 'First Name',
                   keyboardType: TextInputType.name,
                 ),
               ),
@@ -83,9 +83,9 @@ Widget buildSignUpUI(BuildContext context) {
               Expanded(
                 child: textfield(
                   context,
-                  controller: usernameController,
-                  hint: usernameTextField_Hint,
-                  label: usernameTextField_Label,
+                  controller: lastNameController,
+                  hint: 'Last Name',
+                  label: 'Last Name',
                   keyboardType: TextInputType.name,
                 ),
               ),
@@ -125,16 +125,26 @@ Widget buildSignUpUI(BuildContext context) {
                   context,
                   label: signupButton_Label,
                   onTap: () async {
+                    final bool isFirstNameValid = isNameValid(firstNameController.text);
+                    final bool isLastNameValid = isNameValid(lastNameController.text);
                     if (emailController.text.isNotEmpty &&
                         passwordController.text.isNotEmpty &&
-                        usernameController.text.isNotEmpty &&
-                        fullNameController.text.isNotEmpty) {
-                      await context.read<AuthCubit>().signup(
-                            email: emailController.text,
-                            password: passwordController.text,
-                            username: usernameController.text,
-                            fullName: fullNameController.text,
-                          );
+                        lastNameController.text.isNotEmpty &&
+                        firstNameController.text.isNotEmpty) {
+                      if (isFirstNameValid == true && isLastNameValid == true) {
+                        await context.read<AuthCubit>().signup(
+                              email: emailController.text,
+                              password: passwordController.text,
+                              lastName: lastNameController.text,
+                              firstName: firstNameController.text,
+                            );
+                      } else {
+                        longTimeSnackBar(
+                          context,
+                          content:
+                              'Names can\'t include special characters or numbers. Only letters from English, Arabic, and Latin scripts, including diacritics (like ö, é, ع, أ), are allowed.',
+                        );
+                      }
                     } else {
                       shortTimeSnackBar(context, content: emptyFieldsSnackbarTitle);
                     }
@@ -192,4 +202,11 @@ Widget buildSignUpUI(BuildContext context) {
       );
     },
   );
+}
+
+bool isNameValid(String name) {
+  final usernameRegex = RegExp(r'^\p{L}+$', unicode: true);
+  return usernameRegex.hasMatch(name) &&
+      name.length >= 2 && // Minimum length
+      name.length <= 30; // Maximum length
 }

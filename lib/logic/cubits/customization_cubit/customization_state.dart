@@ -7,6 +7,7 @@ abstract class CustomizationState {
   final String? birthDate;
   final String? country;
   final String? title;
+  final String? username;
 
   CustomizationState({
     XFile? image,
@@ -14,11 +15,13 @@ abstract class CustomizationState {
     String? birthDate,
     String? country,
     String? title,
+    String? username,
   })  : image = image ?? XFile(''),
         gender = gender ?? '',
         birthDate = birthDate ?? '',
         country = country ?? '',
-        title = title ?? '';
+        title = title ?? '',
+        username = username ?? '';
 }
 
 class CustomizationInitial extends CustomizationState {}
@@ -40,6 +43,7 @@ class AddCustomization_Success extends CustomizationState {
     required super.country,
     required super.gender,
     required super.title,
+    required super.username,
   });
 }
 

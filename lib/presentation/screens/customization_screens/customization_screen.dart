@@ -19,6 +19,7 @@ TextEditingController birthDateController = TextEditingController();
 TextEditingController countryController = TextEditingController();
 TextEditingController genderController = TextEditingController();
 TextEditingController titleController = TextEditingController();
+TextEditingController usernameController = TextEditingController();
 final ImagePicker _picker = ImagePicker();
 XFile? _imageFile;
 
@@ -121,14 +122,30 @@ class _CustomizationScreenState extends State<CustomizationScreen> {
                       controller: titleController,
                     ),
                     height(20),
-                    textfield(
-                      context,
-                      hint: enterCountryHint,
-                      keyboardType: TextInputType.text,
-                      label: countryLabel,
-                      controller: countryController,
-                      readOnly: true,
-                      onTap: _showCountrySelectionDialog,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: textfield(
+                            context,
+                            hint: 'Country',
+                            keyboardType: TextInputType.text,
+                            label: 'Country',
+                            controller: countryController,
+                            readOnly: true,
+                            onTap: _showCountrySelectionDialog,
+                          ),
+                        ),
+                        width(22),
+                        Expanded(
+                          child: textfield(
+                            context,
+                            hint: 'Username',
+                            keyboardType: TextInputType.name,
+                            label: 'Username',
+                            controller: usernameController,
+                          ),
+                        ),
+                      ],
                     ),
                     height(20),
                     Row(
@@ -191,18 +208,29 @@ class _CustomizationScreenState extends State<CustomizationScreen> {
                                 context,
                                 label: confirmButton_Label,
                                 onTap: () async {
+                                  final bool isValid = isUsernameValid(usernameController.text);
                                   if (titleController.text.isNotEmpty &&
                                       countryController.text.isNotEmpty &&
                                       birthDateController.text.isNotEmpty &&
                                       genderController.text.isNotEmpty &&
+                                      usernameController.text.isNotEmpty &&
                                       _imageFile != null) {
-                                    await context.read<CustomizationCubit>().uploadCustomization(
-                                          image: _imageFile!,
-                                          title: titleController.text,
-                                          country: countryController.text,
-                                          birthDate: birthDateController.text,
-                                          gender: genderController.text,
-                                        );
+                                    if (isValid == true) {
+                                      await context.read<CustomizationCubit>().uploadCustomization(
+                                            image: _imageFile!,
+                                            title: titleController.text,
+                                            username: usernameController.text,
+                                            country: countryController.text,
+                                            birthDate: birthDateController.text,
+                                            gender: genderController.text,
+                                          );
+                                    } else {
+                                      longTimeSnackBar(
+                                        context,
+                                        content:
+                                            'Username must follow these rules:\n1- Only lowercase letters.\n2- Spaces are not permitted.\n3- Dots, underscores and dashes are allowed.',
+                                      );
+                                    }
                                   } else {
                                     shortTimeSnackBar(context, content: emptyFieldsSnackbarTitle);
                                   }
@@ -218,6 +246,13 @@ class _CustomizationScreenState extends State<CustomizationScreen> {
         ),
       ),
     );
+  }
+
+  bool isUsernameValid(String username) {
+    final usernameRegex = RegExp(r'^[a-z0-9._-]+$');
+    return usernameRegex.hasMatch(username) &&
+        username.length >= 3 && // Minimum length
+        username.length <= 30; // Maximum length
   }
 
   void _showCountrySelectionDialog() {

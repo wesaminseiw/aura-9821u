@@ -2,7 +2,9 @@ import 'package:aura/presentation/screens/auth_screens/signin_screen.dart';
 import 'package:aura/presentation/screens/auth_screens/signup_screen.dart';
 import 'package:aura/presentation/screens/auth_screens/verify_email_screen.dart';
 import 'package:aura/presentation/screens/customization_screens/customization_screen.dart';
-
+import 'package:aura/presentation/screens/profile_screen.dart';
+import 'package:aura/presentation/screens/search_screen.dart';
+import 'package:flutter/material.dart';
 import 'utils/constants.dart';
 import '../presentation/screens/home_screen.dart';
 import 'package:get/get.dart';
@@ -31,6 +33,19 @@ class AppRouter {
       page: () => const CustomizationScreen(),
     ),
   ];
+
+  //* customized navigators
+  static void offAllNavigateWithoutAnimation(route) {
+    Get.offAll(
+      () => route == '/home'
+          ? const HomeScreen()
+          : route == '/profile'
+              ? const ProfileScreen()
+              : SearchScreen(),
+      transition: Transition.noTransition, // No transition (like Duration.zero)
+      curve: Curves.linear, // Optional, used for transition timing curve
+    );
+  }
 
   //* to navigators
   static void toHome() {

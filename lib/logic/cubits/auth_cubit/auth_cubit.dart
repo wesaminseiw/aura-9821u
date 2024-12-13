@@ -1,8 +1,8 @@
 import 'dart:developer';
-
 import 'package:aura/app/utils/exceptions.dart';
 import 'package:aura/data/services/firebase_auth_service.dart';
 import 'package:bloc/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show immutable;
 
 part 'auth_state.dart';
@@ -13,8 +13,8 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> signup({
     required String email,
     required String password,
-    required String username,
-    required String fullName,
+    required String firstName,
+    required String lastName,
   }) async {
     emit(AuthSignUp_Loading());
     log('===== AuthSignUp_Loading() =====');
@@ -22,8 +22,8 @@ class AuthCubit extends Cubit<AuthState> {
       await AuthService.signup(
         email: email,
         password: password,
-        fullName: fullName,
-        username: username,
+        firstName: firstName,
+        lastName: lastName,
       );
       emit(AuthSignUp_Success());
       log('===== AuthSignUp_Success() =====');
@@ -83,24 +83,29 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void getEmail() {
+  String getEmail() {
     try {
       final String email = AuthService.getEmail();
       emit(AuthGetEmail_Success(email: email));
+      return email;
     } catch (e) {
       emit(AuthGetEmail_Failure());
+      return '';
     }
   }
 
   Future<void> checkEmailVerification() async {
     final bool isVerified = await AuthService.checkEmailVerification();
+    emit(AuthCheckVerification_Loading());
+    await Future.delayed(Duration(milliseconds: 500));
     if (isVerified == true) {
       if (checkUserState() == 2) {
         emit(AuthCheck_UncustomizedUser());
       }
       emit(AuthCheckVerification_Verified());
     } else {
-      emit(AuthCheckVerification_NotVerified());
+      getEmail();
+      emit(AuthCheckVerification_NotVerified(email: FirebaseAuth.instance.currentUser!.email!));
     }
   }
 
