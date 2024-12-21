@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           } else if (state is AuthCheck_NotVerifiedUser) {
             AppRouter.offVerifyEmail();
           } else if (state is AuthCheck_VerifiedUser) {
-            AppRouter.offHome();
+            AppRouter.offFeed();
           } else if (state is AuthCheck_UncustomizedUser) {
             AppRouter.offCustomization();
           }

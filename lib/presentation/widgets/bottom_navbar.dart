@@ -21,95 +21,110 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
-    return BottomAppBar(
-      color: context.colorScheme.surface,
-      shape: const CircularNotchedRectangle(),
-      child: SizedBox(
-        height: 80.0,
-        child: Row(
-          children: <Widget>[
-            BlocBuilder<ProfileCubit, ProfileState>(
-              builder: (context, state) {
-                return Expanded(
+    return Material(
+      elevation: 0,
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: context.colorScheme.secondary.withAlpha(100), // Shadow color
+              offset: Offset(0, 8), // Change this to move shadow (x, y)
+              blurRadius: 20, // Blur effect
+              spreadRadius: 0, // Spread effect
+            ),
+          ],
+        ),
+        child: BottomAppBar(
+          color: context.colorScheme.surface,
+          shape: const CircularNotchedRectangle(),
+          child: SizedBox(
+            height: 80.0,
+            child: Row(
+              children: <Widget>[
+                BlocBuilder<ProfileCubit, ProfileState>(
+                  builder: (context, state) {
+                    return Expanded(
+                      child: Center(
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                widget.currentIndex = 0;
+                              });
+                              AppRouter.offAllNavigateWithoutAnimation(profileRoute);
+                              log('=== PROFILE ===');
+                            },
+                            child: state is GetProfileImage_Success
+                                ? CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: widget.currentIndex == 0 ? context.colorScheme.primary : Colors.grey[300], // Background color
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: Image.network(
+                                        state.imageUrl, // Display selected image
+                                        fit: BoxFit.cover,
+                                        width: 50,
+                                        height: 50,
+                                      ),
+                                    ),
+                                  )
+                                : Icon(
+                                    Icons.person,
+                                    color: widget.currentIndex == 0 ? context.colorScheme.primary : context.colorScheme.secondary,
+                                    size: widget.currentIndex == 0 ? 38 : 32,
+                                  ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                Expanded(
                   child: Center(
                     child: SizedBox(
                       width: double.infinity,
-                      child: GestureDetector(
-                        onTap: () {
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.home_rounded,
+                          color: widget.currentIndex == 1 ? context.colorScheme.primary : context.colorScheme.secondary,
+                          size: widget.currentIndex == 1 ? 38 : 32,
+                        ),
+                        onPressed: () {
                           setState(() {
-                            widget.currentIndex = 0;
+                            widget.currentIndex = 1;
                           });
-                          AppRouter.offAllNavigateWithoutAnimation(profileRoute);
-                          log('=== PROFILE ===');
+                          AppRouter.offAllNavigateWithoutAnimation(feedRoute);
+                          log('=== HOME ===');
                         },
-                        child: state is GetProfileImage_Success
-                            ? CircleAvatar(
-                                radius: 30,
-                                backgroundColor: widget.currentIndex == 0 ? context.colorScheme.primary : Colors.grey[300], // Background color
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: Image.network(
-                                    state.imageUrl, // Display selected image
-                                    fit: BoxFit.cover,
-                                    width: 50,
-                                    height: 50,
-                                  ),
-                                ),
-                              )
-                            : Icon(
-                                Icons.person,
-                                color: widget.currentIndex == 0 ? context.colorScheme.primary : context.colorScheme.secondary,
-                                size: widget.currentIndex == 0 ? 38 : 32,
-                              ),
                       ),
                     ),
                   ),
-                );
-              },
-            ),
-            Expanded(
-              child: Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.home_rounded,
-                      color: widget.currentIndex == 1 ? context.colorScheme.primary : context.colorScheme.secondary,
-                      size: widget.currentIndex == 1 ? 38 : 32,
+                ),
+                Expanded(
+                  child: Center(
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.search,
+                          color: widget.currentIndex == 2 ? context.colorScheme.primary : context.colorScheme.secondary,
+                          size: widget.currentIndex == 2 ? 38 : 32,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            widget.currentIndex = 2;
+                          });
+                          AppRouter.offAllNavigateWithoutAnimation(searchRoute);
+                          log('=== SEARCH ===');
+                        },
+                      ),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        widget.currentIndex = 1;
-                      });
-                      AppRouter.offAllNavigateWithoutAnimation(homeRoute);
-                      log('=== HOME ===');
-                    },
                   ),
                 ),
-              ),
+              ],
             ),
-            Expanded(
-              child: Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.search,
-                      color: widget.currentIndex == 2 ? context.colorScheme.primary : context.colorScheme.secondary,
-                      size: widget.currentIndex == 2 ? 38 : 32,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        widget.currentIndex = 2;
-                      });
-                      AppRouter.offAllNavigateWithoutAnimation(searchRoute);
-                      log('=== SEARCH ===');
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

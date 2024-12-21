@@ -46,7 +46,7 @@ class _CustomizationScreenState extends State<CustomizationScreen> {
       child: BlocListener<CustomizationCubit, CustomizationState>(
         listener: (context, state) {
           if (state is AddCustomization_Success) {
-            AppRouter.offHome();
+            AppRouter.offFeed();
           } else if (state is AddCustomization_Failure) {
             shortTimeSnackBar(context, content: somethingWentWrong);
           }
@@ -228,7 +228,7 @@ class _CustomizationScreenState extends State<CustomizationScreen> {
                                       longTimeSnackBar(
                                         context,
                                         content:
-                                            'Username must follow these rules:\n1- Only lowercase letters.\n2- Spaces are not permitted.\n3- Dots, underscores and dashes are allowed.',
+                                            'Username must follow these rules:\n1- Only lowercase letters.\n2- Spaces are not permitted.\n3- Dots, underscores and dashes are allowed.\n4- Maximum length is 15 characters.',
                                       );
                                     }
                                   } else {
@@ -252,7 +252,7 @@ class _CustomizationScreenState extends State<CustomizationScreen> {
     final usernameRegex = RegExp(r'^[a-z0-9._-]+$');
     return usernameRegex.hasMatch(username) &&
         username.length >= 3 && // Minimum length
-        username.length <= 30; // Maximum length
+        username.length <= 15; // Maximum length
   }
 
   void _showCountrySelectionDialog() {

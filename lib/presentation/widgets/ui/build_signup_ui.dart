@@ -125,13 +125,12 @@ Widget buildSignUpUI(BuildContext context) {
                   context,
                   label: signupButton_Label,
                   onTap: () async {
-                    final bool isFirstNameValid = isNameValid(firstNameController.text);
-                    final bool isLastNameValid = isNameValid(lastNameController.text);
+                    final bool isTheNameValid = isNameValid(firstNameController.text, lastNameController.text);
                     if (emailController.text.isNotEmpty &&
                         passwordController.text.isNotEmpty &&
                         lastNameController.text.isNotEmpty &&
                         firstNameController.text.isNotEmpty) {
-                      if (isFirstNameValid == true && isLastNameValid == true) {
+                      if (isTheNameValid == true) {
                         await context.read<AuthCubit>().signup(
                               email: emailController.text,
                               password: passwordController.text,
@@ -142,7 +141,7 @@ Widget buildSignUpUI(BuildContext context) {
                         longTimeSnackBar(
                           context,
                           content:
-                              'Names can\'t include special characters or numbers. Only letters from English, Arabic, and Latin scripts, including diacritics (like ö, é, ع, أ), are allowed.',
+                              'Names can\'t include special characters or numbers. Only letters from English, Arabic, and Latin scripts, including diacritics (like ö, é, ع, أ), are allowed.\nAlso max length for the whole name is 20 characters.',
                         );
                       }
                     } else {
@@ -193,7 +192,7 @@ Widget buildSignUpUI(BuildContext context) {
                 flex: 1,
                 child: googleSignUpOrSignInButton(
                   context,
-                  onTap: () => AppRouter.offHome(),
+                  onTap: () => AppRouter.offFeed(),
                 ),
               ),
             ],
@@ -204,9 +203,7 @@ Widget buildSignUpUI(BuildContext context) {
   );
 }
 
-bool isNameValid(String name) {
-  final usernameRegex = RegExp(r'^\p{L}+$', unicode: true);
-  return usernameRegex.hasMatch(name) &&
-      name.length >= 2 && // Minimum length
-      name.length <= 30; // Maximum length
+bool isNameValid(String firstName, String lastName) {
+  final nameRegex = RegExp(r'^\p{L}+$', unicode: true);
+  return nameRegex.hasMatch(firstName) && nameRegex.hasMatch(lastName) && firstName.length + lastName.length <= 20;
 }

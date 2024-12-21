@@ -18,8 +18,12 @@ const settingsIcon = 'assets/icons/settings.png';
 const verifyEmailImage = 'assets/images/verify-email.png';
 const cameraImage = 'assets/images/camera.png';
 
+//* ANIMATIONS PATHS
+const thinkAnimation = 'lib/presentation/animations/think.json';
+const searchAnimation = 'lib/presentation/animations/search.json';
+
 //* ROUTES
-const String homeRoute = '/home';
+const String feedRoute = '/home';
 const String signInRoute = '/signin';
 const String signUpRoute = '/signup';
 const String verifyEmailRoute = '/verify-email';

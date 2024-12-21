@@ -22,7 +22,7 @@ Widget buildVerifyEmailUI(BuildContext context, String email) {
       } else if (state is AuthCheckVerification_Verified) {
         context.read<CustomizationCubit>().checkIfCustomizationDataExists();
       } else if (state is CustomizationExistCheck_Exists) {
-        AppRouter.offHome();
+        AppRouter.offFeed();
       } else if (state is CustomizationExistCheck_NotExisting) {
         AppRouter.offCustomization();
       }

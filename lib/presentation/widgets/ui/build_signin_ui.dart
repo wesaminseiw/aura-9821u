@@ -22,7 +22,7 @@ Widget buildSignInUI(BuildContext context) {
         longTimeSnackBar(context, content: state.error);
       } else if (state is AuthSignIn_SuccessVerified) {
         shortTimeSnackBar(context, content: signinSuccessVerifiedSnackbar_Title);
-        AppRouter.offHome();
+        AppRouter.offFeed();
       } else if (state is AuthSignIn_SuccessNotVerified) {
         longTimeSnackBar(context, content: signinSuccessNotVerifiedSnackbar_Title);
         AppRouter.offVerifyEmail();
@@ -144,7 +144,7 @@ Widget buildSignInUI(BuildContext context) {
                 flex: 1,
                 child: googleSignUpOrSignInButton(
                   context,
-                  onTap: () => AppRouter.offHome(),
+                  onTap: () => AppRouter.offFeed(),
                 ),
               ),
             ],

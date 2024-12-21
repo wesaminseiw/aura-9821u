@@ -6,15 +6,15 @@ import 'package:aura/presentation/screens/profile_screen.dart';
 import 'package:aura/presentation/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'utils/constants.dart';
-import '../presentation/screens/home_screen.dart';
+import '../presentation/screens/feed_screen.dart';
 import 'package:get/get.dart';
 
 class AppRouter {
   //* routes defining
   static final List<GetPage> routes = [
     GetPage(
-      name: homeRoute,
-      page: () => const HomeScreen(),
+      name: feedRoute,
+      page: () => const FeedScreen(),
     ),
     GetPage(
       name: signInRoute,
@@ -38,7 +38,7 @@ class AppRouter {
   static void offAllNavigateWithoutAnimation(route) {
     Get.offAll(
       () => route == '/home'
-          ? const HomeScreen()
+          ? const FeedScreen()
           : route == '/profile'
               ? const ProfileScreen()
               : SearchScreen(),
@@ -48,8 +48,8 @@ class AppRouter {
   }
 
   //* to navigators
-  static void toHome() {
-    Get.toNamed(homeRoute);
+  static void toFeed() {
+    Get.toNamed(feedRoute);
   }
 
   static void toSignIn() {
@@ -69,8 +69,8 @@ class AppRouter {
   }
 
   //* off navigators
-  static void offHome() {
-    Get.offNamed(homeRoute);
+  static void offFeed() {
+    Get.offNamed(feedRoute);
   }
 
   static void offSignIn() {
